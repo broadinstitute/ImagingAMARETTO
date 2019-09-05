@@ -8,7 +8,8 @@ AMARETTO_HTMLreport(AMARETTOinit, AMARETTOresults, ProcessedData,
   show_row_names = FALSE, SAMPLE_annotation = NULL, ID = NULL,
   hyper_geo_reference = NULL, genetic_pert_hyper_geo_reference = NULL,
   chem_pert_hyper_geo_reference = NULL, output_address = "./",
-  driverGSEA = TRUE, phenotype_association_table = NULL)
+  driverGSEA = TRUE, phenotype_association_table = NULL,
+  imaging_phenotypes_keywords = NULL)
 }
 \arguments{
 \item{AMARETTOinit}{AMARETTO initialize output}
@@ -25,11 +26,17 @@ AMARETTO_HTMLreport(AMARETTOinit, AMARETTOresults, ProcessedData,
 
 \item{hyper_geo_reference}{Either GMT file address for genesets or computed GSEA dataframe using HyperGeoEnrichmentTest()}
 
+\item{genetic_pert_hyper_geo_reference}{}
+
+\item{chem_pert_hyper_geo_reference}{}
+
 \item{output_address}{Output directory for the html files.}
 
 \item{driverGSEA}{if TRUE, module drivers will also be included in the hypergeometric test.}
 
 \item{phenotype_association_table}{Optional, Phenotype Association table.}
+
+\item{imaging_phenotypes_keywords}{a character vector of keywords distinguishing imaging phenotypes.}
 }
 \value{
 result

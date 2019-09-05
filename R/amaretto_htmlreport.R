@@ -12,6 +12,9 @@
 #' @param show_row_names if True, sample names will appear in the heatmap
 #' @param driverGSEA if TRUE, module drivers will also be included in the hypergeometric test.
 #' @param phenotype_association_table Optional, Phenotype Association table.
+#' @param genetic_pert_hyper_geo_reference 
+#' @param chem_pert_hyper_geo_reference 
+#' @param imaging_phenotypes_keywords a character vector of keywords distinguishing imaging phenotypes. 
 #'
 #' @import dplyr
 #' @importFrom doParallel registerDoParallel
@@ -51,7 +54,8 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
                                 chem_pert_hyper_geo_reference = NULL,
                                 output_address = './',
                                 driverGSEA = TRUE,
-                                phenotype_association_table = NULL){
+                                phenotype_association_table = NULL,
+                                imaging_phenotypes_keywords = NULL){
   
   `%dopar%` <- foreach::`%dopar%`
   `%do%` <- foreach::`%do%`
@@ -205,16 +209,36 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     if (!is.null(phenotype_association_table)){
       filename_table <- paste0("phenotypes_module",ModuleNr)
       buttons_list <- list(list(extend ='csv',filename=filename_table), list(extend ='excel',filename=filename_table), list(extend = 'pdf', pageSize = 'A4', orientation = 'landscape',filename=filename_table),list(extend ='print'), list(extend ='colvis'))
-      dt_phenotype_association <- DT::datatable(phenotype_association_table %>% 
-                                                                dplyr::filter(ModuleNr==paste0("Module ",!!ModuleNr)) %>% 
-                                                                dplyr::mutate(p.value = signif(p.value, digits = 3), q.value = signif(q.value, digits = 3)) %>% 
-                                                                dplyr::arrange(q.value) %>%
-                                                                dplyr::select(-ModuleNr), class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
-                                                              options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
-                                                              colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
-                                                DT::formatSignif(c('p.value','q.value'), 2)
+      
+      module_phenotype_association_table<-phenotype_association_table %>% dplyr::filter(ModuleNr==paste0("Module ",!!ModuleNr)) %>% 
+        dplyr::mutate(p.value = signif(p.value, digits = 3), q.value = signif(q.value, digits = 3)) %>% dplyr::arrange(q.value) %>%dplyr::select(-ModuleNr)
+      
+      
+      if(is.null(imaging_phenotypes_keywords)){
+        module_phenotype_association_table_molecular_clinical<-module_phenotype_association_table
+        module_phenotype_association_table_imaging<-data.frame(Phenotypes="There is no imaging phenotype.")
+      }
+      else{
+        imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
+        module_phenotype_association_table_molecular_clinical<-module_phenotype_association_table%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+        module_phenotype_association_table_imaging<-module_phenotype_association_table%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+        dt_phenotype_association_img <- DT::datatable(module_phenotype_association_table_imaging,
+                                                     class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
+                                                     options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
+                                                     colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
+          DT::formatSignif(c('p.value','q.value'), 2)
+      }
+      dt_phenotype_association_mc <- DT::datatable(module_phenotype_association_table,
+                                                   class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
+                                                   options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
+                                                   colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
+        DT::formatSignif(c('p.value','q.value'), 2)
+
+      
+      
+      
     } else{
-      dt_phenotype_association <- "Phenotype association resuls were not provided."
+      dt_phenotype_association_mc <- "Phenotype association resuls were not provided."
     }
     print("The datatable with phenotype association results is created.")
     
@@ -233,7 +257,8 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
                       heatmap_module = heatmap_module,
                       dt_regulators = dt_regulators,
                       dt_targets = dt_targets,
-                      dt_phenotype_association = dt_phenotype_association,
+                      dt_phenotype_association_mc = dt_phenotype_association_mc,
+                      dt_phenotype_association_img=dt_phenotype_association_img,
                       dt_genesets = dt_genesets,
                       dt_genesets_genetic_pert = dt_genesets_genetic_pert,
                       dt_genesets_chem_pert = dt_genesets_chem_pert), knit_meta=knitr::knit_meta(class=NULL, clean = TRUE),quiet = TRUE)
@@ -336,15 +361,31 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     filename_table <- "phenotypes_all_modules"
     buttons_list <- list(list(extend ='csv',filename=filename_table), list(extend ='excel',filename=filename_table), list(extend = 'pdf', pageSize = 'A4', orientation = 'landscape',filename=filename_table),list(extend ='print'), list(extend ='colvis'))
     
-    dt_phenotype_association_all <- DT::datatable(phenotype_association_table %>% 
-                                                    dplyr::mutate(p.value=signif(p.value, digits = 3), q.value=signif(q.value, digits = 3)) %>% 
-                                                    dplyr::mutate(ModuleNr=paste0('<a href="./modules/module',gsub("Module ","",ModuleNr),'.html">',ModuleNr,'</a>'))%>%
-                                                    dplyr::arrange(q.value), class='display',filter = 'top', extensions = c('Buttons','KeyTable'),rownames = FALSE,
+    phenotype_association_all<-phenotype_association_table %>% dplyr::mutate(p.value=signif(p.value, digits = 3), q.value=signif(q.value, digits = 3)) %>% 
+      dplyr::mutate(ModuleNr=paste0('<a href="./modules/module',gsub("Module ","",ModuleNr),'.html">',ModuleNr,'</a>'))%>%dplyr::arrange(q.value)
+    
+    
+    if(is.null(imaging_phenotypes_keywords)){
+      all_phenotype_association_table_molecular_clinical<-phenotype_association_all
+      all_phenotype_association_table_imaging<-data.frame(Phenotypes="There is no imaging phenotype.")
+    }
+    else{
+      imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
+      all_phenotype_association_table_molecular_clinical<-module_phenotype_association_table%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+      all_phenotype_association_table_imaging<-module_phenotype_association_table%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+      dt_phenotype_association_img_all <- DT::datatable(all_phenotype_association_table_imaging,
+                                                    class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
+                                                    options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
+                                                    colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
+        DT::formatSignif(c('p.value','q.value'), 2)
+    }
+
+    dt_phenotype_association_mc_all<- DT::datatable(all_phenotype_association_table_molecular_clinical, class='display',filter = 'top', extensions = c('Buttons','KeyTable'),rownames = FALSE,
                                                options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list, columnDefs = list(list(className = 'dt-head-center', targets = "_all"),list(className = 'text-left', targets = "_all"))),colnames=c("Module","Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),
                                                escape = FALSE) %>% DT::formatSignif(c('p.value','q.value'),2)
   }
   else{
-    dt_phenotype_association_all <- data.frame(Phenotype_Association="Phenotype association resuls were not provided.")
+    dt_phenotype_association_mc_all <- data.frame(Phenotype_Association="Phenotype association resuls were not provided.")
   }
   
   #Render index page
@@ -389,7 +430,8 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
                       dt_genesetsall = dt_genesetsall,
                       dt_genesetsall_genetic_pert = dt_genesetsall_genetic_pert,
                       dt_genesetsall_chem_pert = dt_genesetsall_chem_pert,
-                      dt_phenotype_association_all = dt_phenotype_association_all,
+                      dt_phenotype_association_mc_all = dt_phenotype_association_mc_all,
+                      dt_phenotype_association_img_all = dt_phenotype_association_img_all,
                       AMARETTOinit = AMARETTOinit,
                       AMARETTOresults = AMARETTOresults)
   

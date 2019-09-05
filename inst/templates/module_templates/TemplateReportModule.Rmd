@@ -65,14 +65,23 @@ dt_genesets_chem_pert
 
 <br><br><br>
 
-## Associations of Phenotypes to Regulatory Module
+## Associations of Clinical and Molecular Phenotypes to Regulatory Module
 
 <br><br><br>
 
 ```{r module_Phenotypes, echo=FALSE}
-dt_phenotype_association
+dt_phenotype_association_mc
 ```
 
 <br><br><br>
 
+## Associations of Imaging Phenotypes to Regulatory Module
+
+<br><br><br>
+
+```{r module_Phenotypes, echo=FALSE}
+dt_phenotype_association_img
+```
+
+<br><br><br>
 </center>

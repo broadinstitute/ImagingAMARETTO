@@ -19,12 +19,21 @@ output:
 </style>
 
 <center>
-## Associations of Phenotypes to Regulatory Modules
+## Associations of Clinical and Molecular Phenotypes to Regulatory Modules
 
 <br><br><br>
 
 ```{r Phenotypes,echo=FALSE}
-dt_phenotype_association_all
+dt_phenotype_association_mc_all
+```
+<br><br><br>
+
+## Associations of Imaging Phenotypes to Regulatory Modules
+
+<br><br><br>
+
+```{r Phenotypes,echo=FALSE}
+dt_phenotype_association_img_all
 ```
 <br><br><br>
 
