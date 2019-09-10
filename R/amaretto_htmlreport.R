@@ -217,6 +217,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
       if(is.null(imaging_phenotypes_keywords)){
         module_phenotype_association_table_molecular_clinical<-module_phenotype_association_table
         module_phenotype_association_table_imaging<-data.frame(Phenotypes="There is no imaging phenotype.")
+        dt_phenotype_association_img<-DT::datatable(data.frame(Phenotype = "There is no imaging phenotype association."))
       }
       else{
         imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
@@ -238,7 +239,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
       
       
     } else{
-      dt_phenotype_association_mc <- "Phenotype association resuls were not provided."
+      dt_phenotype_association_mc <- data.frame(Phenotype = "Phenotype association resuls were not provided.")
     }
     print("The datatable with phenotype association results is created.")
     
@@ -258,7 +259,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
                       dt_regulators = dt_regulators,
                       dt_targets = dt_targets,
                       dt_phenotype_association_mc = dt_phenotype_association_mc,
-                      dt_phenotype_association_img=dt_phenotype_association_img,
+                      dt_phenotype_association_img = dt_phenotype_association_img,
                       dt_genesets = dt_genesets,
                       dt_genesets_genetic_pert = dt_genesets_genetic_pert,
                       dt_genesets_chem_pert = dt_genesets_chem_pert), knit_meta=knitr::knit_meta(class=NULL, clean = TRUE),quiet = TRUE)
@@ -368,11 +369,12 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     if(is.null(imaging_phenotypes_keywords)){
       all_phenotype_association_table_molecular_clinical<-phenotype_association_all
       all_phenotype_association_table_imaging<-data.frame(Phenotypes="There is no imaging phenotype.")
+      dt_phenotype_association_img_all<-DT::datatable(data.frame(Phenotype = "There is no imaging phenotype association."))
     }
     else{
       imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
-      all_phenotype_association_table_molecular_clinical<-module_phenotype_association_table%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
-      all_phenotype_association_table_imaging<-module_phenotype_association_table%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+      all_phenotype_association_table_molecular_clinical<-phenotype_association_all%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+      all_phenotype_association_table_imaging<-phenotype_association_all%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
       dt_phenotype_association_img_all <- DT::datatable(all_phenotype_association_table_imaging,
                                                     class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
                                                     options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
@@ -386,6 +388,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
   }
   else{
     dt_phenotype_association_mc_all <- data.frame(Phenotype_Association="Phenotype association resuls were not provided.")
+    dt_phenotype_association_img_all<-data.frame(Phenotypes="There is no imaging phenotype.")
   }
   
   #Render index page

@@ -69,7 +69,7 @@ dt_genesets_chem_pert
 
 <br><br><br>
 
-```{r module_Phenotypes, echo=FALSE}
+```{r module_Phenotypes_mc, echo=FALSE}
 dt_phenotype_association_mc
 ```
 
@@ -79,7 +79,7 @@ dt_phenotype_association_mc
 
 <br><br><br>
 
-```{r module_Phenotypes, echo=FALSE}
+```{r module_Phenotypes_img, echo=FALSE}
 dt_phenotype_association_img
 ```
 

@@ -1,12 +1,10 @@
 ---
-title: <center>AMARETTO Report</center>
-pagetitle: AMARETTO Report
+title: <center>Community-AMARETTO Report</center>
 output: 
   html_document:
     theme: cerulean
     highlight: NULL
 ---
-
 <style>
   .main-container {
     max-width:  100% !important;
@@ -19,21 +17,18 @@ output:
 </style>
 
 <center>
-## Associations of Clinical and Molecular Phenotypes to Regulatory Modules
 
+## Association of Clinical and Molecular Phenotypes to Communities
 <br><br><br>
-
-```{r Phenotypes_mc,echo=FALSE}
-dt_phenotype_association_mc_all
+```{r CommunityDTPhC_mc,echo=FALSE}
+DTPh_mc
 ```
 <br><br><br>
 
-## Associations of Imaging Phenotypes to Regulatory Modules
-
+## Association of Imaging Phenotypes to Communities
 <br><br><br>
-
-```{r Phenotypes_img,echo=FALSE}
-dt_phenotype_association_img_all
+```{r CommunityDTPhC_img,echo=FALSE}
+DTPh_img
 ```
 <br><br><br>
 
