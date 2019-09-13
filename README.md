@@ -5,7 +5,7 @@
 
 # Imaging-AMARETTO
 
-Imaging-AMARETTO: tools for interpreting multi-omics networks for relevance to clinical outcomes and radiographic and histopathology imaging-derived biomarkers
+Imaging-AMARETTO: tools for interpreting multi-omics networks for relevance to radiographic and histopathology imaging-derived biomarkers of clinical outcomes
 
 ## Table of Contents
 
