@@ -1,5 +1,5 @@
 ---
-title: <center>Community-AMARETTO `r ComTitle` Report</center>
+title: <center>Imaging-Community-AMARETTO `r ComTitle` Report</center>
 output: 
   html_document:
     theme: cerulean
@@ -51,13 +51,6 @@ DTGSEA
 <br><br><br>
 ```{r CommunityGSEAgp,echo=FALSE}
 DTGSEA_gp
-```
-<br><br><br>
-
-## Enrichments of Chemical Perturbations in Community
-<br><br><br>
-```{r CommunityGSEAcp,echo=FALSE}
-DTGSEA_cp
 ```
 <br><br><br>
 

@@ -3,7 +3,7 @@ navbar:
   title:
   type: inverse
   left:
-    - text: "AMARETTO Report"
+    - text: "Imaging-AMARETTO Report"
       icon: fa-home
       href: index.html
     - text: "Tables"
@@ -17,14 +17,23 @@ navbar:
           href: index_GenesetsEnrichment.html
         - text: "Enrichments of Driver Perturbations in Regulatory Modules"
           href: index_GenesetsEnrichment_gp.html
-        - text: "Enrichments of Drug Perturbations in Regulatory Modules"
-          href: index_GenesetsEnrichment_cp.html
-        - text: "Associations of Phenotypes to Regulatory Modules"
+        - text: "Associations of Clinical and Molecular Phenotypes to Regulatory Modules"
           href: index_PhenoAssociation.html
+        - text: "Associations of Imaging Phenotypes to Regulatory Modules"
+          href: index_PhenoAssociationImg.html
   right:
-    - text: "AMARETTO"
+    - text: ""
       icon: fa-github fa-lg
-      href: https://github.com/gevaertlab/AMARETTO
-    - text: "Community AMARETTO"
-      icon: fa-github fa-lg
-      href: https://github.com/broadinstitute/CommunityAMARETTO
+      menu:
+        - text: "AMARETTO"
+          icon: fa-github fa-lg
+          href: https://github.com/gevaertlab/AMARETTO
+        - text: "Community AMARETTO"
+          icon: fa-github fa-lg
+          href: https://github.com/broadinstitute/CommunityAMARETTO
+        - text: "Imaging-AMARETTO"
+          icon: fa-github fa-lg
+          href: https://github.com/broadinstitute/ImagingAMARETTO
+        - text: "Perturbation-AMARETTO"
+          icon: fa-github fa-lg
+          href: https://github.com/broadinstitute/PerturbationAMARETTO

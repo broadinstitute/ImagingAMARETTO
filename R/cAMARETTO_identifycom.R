@@ -97,20 +97,25 @@ cAMARETTO_IdentifyCom <- function(cAMARETTOnetworkM, color_list=NULL, filterComm
     length(color_list) >= length(community_list)
   }
   if (plot_network) {
-    plot(CommGraph,layout = cAMARETTOnetworkM$layoutMN,
+    layout_1<-cAMARETTOnetworkM$layoutMN
+    layout_1<- norm_coords(layout_1, ymin=-1, ymax=1, xmin=-1, xmax=1)
+    plot(CommGraph,
+         rescale=F,
+         layout = layout_1*1.2,
+         #layout=layout_in_circle,
          vertex.color = as.character(Nodes_Mnetwork$color),
          vertex.label = NA,
-         vertex.frame.color = NA,
-         edge.color = "gray80",
+         # vertex.frame.color = NA,
+         # edge.color = "gray80",
          mark.groups = community_list,
          mark.col = color_list,
-         mark.border = NA,
+         # mark.border = NA,
          main = "Community network")
   
   legendMN <- legend(x = -1.5, y = -1.1+0.05*length(cAMARETTOnetworkM$colMN), legend = names(cAMARETTOnetworkM$colMN), col = cAMARETTOnetworkM$colMN, pch=19, bty="n",ncol=ceiling(length(cAMARETTOnetworkM$colMN)/5))
   legendMN
   
-  legendCOM <- legend(x = 1.5, y = 1.5, legend=names(color_list), col=color_list, pch=19, bty="n",cex=max(0.9,1/(1+0.02*length(color_list))),ncol=ceiling(length(color_list)/15))
+  legendCOM <- legend(x = 0.75, y = 1, legend=names(color_list), col=color_list, pch=19, bty="n",cex=max(0.9,1/(1+0.02*length(color_list))),ncol=ceiling(length(color_list)/10))
   legendCOM
   }
   return(list(CommGraph=CommGraph, community_list=community_list, commEdgeInfo = commEdgeInfo, color_list=color_list))

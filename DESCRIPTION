@@ -1,4 +1,4 @@
-Package: ImagingAMARETTO
+Package: AMARETTO
 Type: Package
 Title: Regulatory Network Inference and Driver Gene Evaluation using Integrative Multi-Omics Analysis and Penalized Regression
 Version: 0.99.24

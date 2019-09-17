@@ -1,6 +1,6 @@
 ---
-title: <center>AMARETTO Report</center>
-pagetitle: AMARETTO Report
+title: <center>Imaging-AMARETTO Report</center>
+pagetitle: Imaging-AMARETTO Report
 output: 
   html_document:
     theme: cerulean

@@ -1,6 +1,6 @@
 ---
-title: <center>AMARETTO Report</center>
-pagetitle: AMARETTO Report
+title: <center>Imaging-AMARETTO Report</center>
+pagetitle: Imaging-AMARETTO Report
 output: 
   html_document:
     theme: cerulean
@@ -25,15 +25,6 @@ output:
 
 ```{r Phenotypes_mc,echo=FALSE}
 dt_phenotype_association_mc_all
-```
-<br><br><br>
-
-## Associations of Imaging Phenotypes to Regulatory Modules
-
-<br><br><br>
-
-```{r Phenotypes_img,echo=FALSE}
-dt_phenotype_association_img_all
 ```
 <br><br><br>
 

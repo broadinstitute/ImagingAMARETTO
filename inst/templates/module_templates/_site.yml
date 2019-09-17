@@ -3,13 +3,22 @@ navbar:
   title:
   type: inverse
   left:
-    - text: "AMARETTO Report"
+    - text: "Imaging-AMARETTO Report"
       icon: fa-home
       href: ../index.html
   right:
-    - text: "AMARETTO"
-      icon: fa-github fa-lg
-      href: https://github.com/gevaertlab/AMARETTO
-    - text: "Community AMARETTO"
-      icon: fa-github fa-lg
-      href: https://github.com/broadinstitute/CommunityAMARETTO
+      - text: ""
+        icon: fa-github fa-lg
+        menu:
+          - text: "AMARETTO"
+            icon: fa-github fa-lg
+            href: https://github.com/gevaertlab/AMARETTO
+          - text: "Community AMARETTO"
+            icon: fa-github fa-lg
+            href: https://github.com/broadinstitute/CommunityAMARETTO
+          - text: "Imaging-AMARETTO"
+            icon: fa-github fa-lg
+            href: https://github.com/broadinstitute/ImagingAMARETTO
+          - text: "Perturbation-AMARETTO"
+            icon: fa-github fa-lg
+            href: https://github.com/broadinstitute/PerturbationAMARETTO

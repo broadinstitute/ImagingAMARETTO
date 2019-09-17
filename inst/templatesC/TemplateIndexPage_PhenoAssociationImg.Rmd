@@ -1,5 +1,5 @@
 ---
-title: <center>Community-AMARETTO Report</center>
+title: <center>Imaging-Community-AMARETTO Report</center>
 output: 
   html_document:
     theme: cerulean
@@ -18,10 +18,11 @@ output:
 
 <center>
 
-## Enrichments of Functional Categories in Communities
+
+## Association of Imaging Phenotypes to Communities
 <br><br><br>
-```{r DTGSEAall, echo=FALSE}
-DTGSEAall
+```{r CommunityDTPhC_img,echo=FALSE}
+DTPh_img
 ```
 <br><br><br>
 

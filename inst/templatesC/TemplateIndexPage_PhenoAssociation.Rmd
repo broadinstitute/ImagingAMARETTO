@@ -1,5 +1,5 @@
 ---
-title: <center>Community-AMARETTO Report</center>
+title: <center>Imaging-Community-AMARETTO Report</center>
 output: 
   html_document:
     theme: cerulean
@@ -22,13 +22,6 @@ output:
 <br><br><br>
 ```{r CommunityDTPhC_mc,echo=FALSE}
 DTPh_mc
-```
-<br><br><br>
-
-## Association of Imaging Phenotypes to Communities
-<br><br><br>
-```{r CommunityDTPhC_img,echo=FALSE}
-DTPh_img
 ```
 <br><br><br>
 

@@ -1,5 +1,5 @@
 ---
-title: <center>AMARETTO Regulatory Module `r toString(ModuleNr)` Report</center>
+title: <center>Imaging-AMARETTO Regulatory Module `r toString(ModuleNr)` Report</center>
 pagetitle: module `r toString(ModuleNr)` report
 output: 
   html_document:
@@ -57,13 +57,13 @@ dt_genesets_genetic_pert
 
 <br><br><br>
 
-## Enrichments of Drug Perturbations in Regulatory Module
-<br><br><br>
-```{r module_geneset3, echo=FALSE, out.width='25%'}
-dt_genesets_chem_pert
-```
+<!-- ## Enrichments of Drug Perturbations in Regulatory Module -->
+<!-- <br><br><br> -->
+<!-- ```{r module_geneset3, echo=FALSE, out.width='25%'} -->
+<!-- dt_genesets_chem_pert -->
+<!-- ``` -->
 
-<br><br><br>
+<!-- <br><br><br> -->
 
 ## Associations of Clinical and Molecular Phenotypes to Regulatory Module
 

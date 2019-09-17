@@ -1,10 +1,12 @@
 ---
-title: <center>Imaging-Community-AMARETTO Report</center>
+title: <center>Imaging-AMARETTO Report</center>
+pagetitle: Imaging-AMARETTO Report
 output: 
   html_document:
     theme: cerulean
     highlight: NULL
 ---
+
 <style>
   .main-container {
     max-width:  100% !important;
@@ -18,10 +20,12 @@ output:
 
 <center>
 
-## Assignments of Driver Genes to Communities
+## Associations of Imaging Phenotypes to Regulatory Modules
+
 <br><br><br>
-```{r CommunityDrivers,echo=FALSE}
-DTComDrivers
+
+```{r Phenotypes_img,echo=FALSE}
+dt_phenotype_association_img_all
 ```
 <br><br><br>
 

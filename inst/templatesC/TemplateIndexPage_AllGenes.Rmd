@@ -1,5 +1,5 @@
 ---
-title: <center>Community-AMARETTO Report</center>
+title: <center>Imaging-Community-AMARETTO Report</center>
 output: 
   html_document:
     theme: cerulean

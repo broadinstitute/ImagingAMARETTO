@@ -211,7 +211,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
       buttons_list <- list(list(extend ='csv',filename=filename_table), list(extend ='excel',filename=filename_table), list(extend = 'pdf', pageSize = 'A4', orientation = 'landscape',filename=filename_table),list(extend ='print'), list(extend ='colvis'))
       
       module_phenotype_association_table<-phenotype_association_table %>% dplyr::filter(ModuleNr==paste0("Module ",!!ModuleNr)) %>% 
-        dplyr::mutate(p.value = signif(p.value, digits = 3), q.value = signif(q.value, digits = 3)) %>% dplyr::arrange(q.value) %>%dplyr::select(-ModuleNr)
+        dplyr::mutate(p.value = signif(p.value, digits = 3), q.value = signif(q.value, digits = 3)) %>% dplyr::arrange(q.value) %>%dplyr::select(-ModuleNr)%>%mutate(Phenotypes=as.factor(Phenotypes))%>%mutate(Statistical_Test=as.factor(Statistical_Test))
       
       
       if(is.null(imaging_phenotypes_keywords)){
@@ -221,15 +221,15 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
       }
       else{
         imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
-        module_phenotype_association_table_molecular_clinical<-module_phenotype_association_table%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
-        module_phenotype_association_table_imaging<-module_phenotype_association_table%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+        module_phenotype_association_table_molecular_clinical<-module_phenotype_association_table%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,ignore.case = TRUE))
+        module_phenotype_association_table_imaging<-module_phenotype_association_table%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,ignore.case = TRUE))
         dt_phenotype_association_img <- DT::datatable(module_phenotype_association_table_imaging,
                                                      class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
                                                      options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
                                                      colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
           DT::formatSignif(c('p.value','q.value'), 2)
       }
-      dt_phenotype_association_mc <- DT::datatable(module_phenotype_association_table,
+      dt_phenotype_association_mc <- DT::datatable(module_phenotype_association_table_molecular_clinical,
                                                    class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
                                                    options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
                                                    colnames=c("Phenotype","Statistics Test","P-value","FDR Q-value","Descriptive Statistics"),escape = FALSE) %>% 
@@ -363,7 +363,7 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     buttons_list <- list(list(extend ='csv',filename=filename_table), list(extend ='excel',filename=filename_table), list(extend = 'pdf', pageSize = 'A4', orientation = 'landscape',filename=filename_table),list(extend ='print'), list(extend ='colvis'))
     
     phenotype_association_all<-phenotype_association_table %>% dplyr::mutate(p.value=signif(p.value, digits = 3), q.value=signif(q.value, digits = 3)) %>% 
-      dplyr::mutate(ModuleNr=paste0('<a href="./modules/module',gsub("Module ","",ModuleNr),'.html">',ModuleNr,'</a>'))%>%dplyr::arrange(q.value)
+      dplyr::mutate(ModuleNr=paste0('<a href="./modules/module',gsub("Module ","",ModuleNr),'.html">',ModuleNr,'</a>'))%>%dplyr::arrange(q.value)%>%mutate(Phenotypes=as.factor(Phenotypes))%>%mutate(Statistical_Test=as.factor(Statistical_Test))
     
     
     if(is.null(imaging_phenotypes_keywords)){
@@ -373,8 +373,8 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     }
     else{
       imaging_phenotypes<-paste(imaging_phenotypes_keywords,collapse = "|")
-      all_phenotype_association_table_molecular_clinical<-phenotype_association_all%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
-      all_phenotype_association_table_imaging<-phenotype_association_all%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,,ignore.case = TRUE))
+      all_phenotype_association_table_molecular_clinical<-phenotype_association_all%>%dplyr::filter(!grepl(imaging_phenotypes,Phenotypes,ignore.case = TRUE))
+      all_phenotype_association_table_imaging<-phenotype_association_all%>%dplyr::filter(grepl(imaging_phenotypes,Phenotypes,ignore.case = TRUE))
       dt_phenotype_association_img_all <- DT::datatable(all_phenotype_association_table_imaging,
                                                     class='display', filter = 'top', extensions = c('Buttons','KeyTable'), rownames = FALSE, 
                                                     options = list(pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), keys = TRUE, dom = 'Blfrtip',buttons = buttons_list),
@@ -417,7 +417,10 @@ AMARETTO_HTMLreport <- function(AMARETTOinit,
     dt_genesetsall_chem_pert = dt_genesetsall_chem_pert),quiet = TRUE)
   
   rmarkdown::render(system.file("templates/TemplateIndexPage_PhenoAssociation.Rmd",package="AMARETTO"), output_dir=paste0(full_path,"/AMARETTOhtmls/"),output_file= "index_PhenoAssociation.html", params = list(
-    dt_phenotype_association_all = dt_phenotype_association_all),quiet = TRUE)
+    dt_phenotype_association_all = dt_phenotype_association_mc_all),quiet = TRUE)
+  
+  rmarkdown::render(system.file("templates/TemplateIndexPage_PhenoAssociationImg.Rmd",package="AMARETTO"), output_dir=paste0(full_path,"/AMARETTOhtmls/"),output_file= "index_PhenoAssociationImg.html", params = list(
+    dt_phenotype_association_all = dt_phenotype_association_img_all),quiet = TRUE)
   
   
   dir.create(paste0(report_address, "/AMARETTOhtmls/Report_data"), recursive = TRUE, showWarnings = FALSE)

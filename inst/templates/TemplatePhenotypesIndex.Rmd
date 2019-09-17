@@ -1,5 +1,5 @@
 ---
-title: <center>AMARETTO Index Survival Report</center>
+title: <center>Imaging-AMARETTO Index Survival Report</center>
 output: 
   html_document:
     theme: cerulean

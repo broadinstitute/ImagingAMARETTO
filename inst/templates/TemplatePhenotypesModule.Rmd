@@ -1,5 +1,5 @@
 ---
-title: <center>AMARETTO Regulatory Module `r toString(i)` \n Phenotypes Report</center>
+title: <center>Imaging-AMARETTO Regulatory Module `r toString(i)` \n Phenotypes Report</center>
 output: 
   html_document:
     theme: cerulean
