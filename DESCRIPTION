@@ -1,6 +1,6 @@
-Package: Imaging-AMARETTO
+Package: ImagingAMARETTO
 Type: Package
-Title: Imaging-AMARETTO: tools for interpreting multi-omics networks for relevance to clinical outcomes and radiographic and histopathology imaging-derived biomarkers
+Title: ImagingAMARETTO: tools for interpreting multi-omics networks for relevance to clinical outcomes and radiographic and histopathology imaging-derived biomarkers
 Version: 0.99.24
 Date: 2016-06-06
 Author:  To do
