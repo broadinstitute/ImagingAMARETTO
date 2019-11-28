@@ -1,4 +1,4 @@
-Package: Imagin-AMARETTO
+Package: Imaging-AMARETTO
 Type: Package
 Title: Imaging-AMARETTO: tools for interpreting multi-omics networks for relevance to clinical outcomes and radiographic and histopathology imaging-derived biomarkers
 Version: 0.99.24
